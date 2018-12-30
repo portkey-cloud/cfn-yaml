@@ -10,7 +10,7 @@ Supports only Sub and Ref intrinsics currently, so rather toy for now.
 
 ## Usage
 
-```
+```clojure
 0% AWS_REGION=eu-west-1 AWS_PROFILE=tiuhti clj -A:aws:rebel
 [Rebel readline] Type :repl/help for online help info
 user=> (require '[cfn-yaml.core :as cfn])
