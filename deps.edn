@@ -3,8 +3,7 @@
         circleci/clj-yaml {:mvn/version "0.5.6"}}
  :aliases {:test {:extra-deps {lambdaisland/kaocha {:mvn/version "0.0-333"}}
                   :extra-paths ["test-resources"]}
-           :cider {:extra-deps {cider/cider-nrepl {:mvn/version "0.18.0"}
-                                nrepl {:mvn/version "0.5.0"}}
+           :cider {:extra-deps {cider/cider-nrepl {:mvn/version "0.19.0"}}
                    :main-opts ["-m" "nrepl.cmdline" "--middleware" "[cider.nrepl/cider-middleware]"]}
            :aws {:extra-deps {com.cognitect.aws/api {:mvn/version "0.8.171"}
                               com.cognitect.aws/endpoints {:mvn/version "1.1.11.475"}
