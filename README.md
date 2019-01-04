@@ -4,11 +4,11 @@ Generate (and read) Cloudformation Yaml templates from Clojure data.
 
 Also validates references in the templates.
 
-## Status
+## Status and motivation
 
 [![CircleCI](https://circleci.com/gh/portkey-cloud/cfn-yaml.svg?style=svg)](https://circleci.com/gh/portkey-cloud/cfn-yaml)
 
-Supports only Sub and Ref intrinsics currently, so rather toy for now.
+Initial goal was to be able to parse Cloudformation Yaml templates that contain short for tags, for example `!Sub 'Hello ${AWS::StackName}'`, into Clojure data. These [tags](https://yaml.org/spec/1.1/#local%20tag/) need support from the parser, for which [snakeyaml](https://bitbucket.org/asomov/snakeyaml/wiki/Documentation#markdown-header-constructors-representers-resolvers) provides support via constructors and representers. This library implements constructors and representers for some short form tags: Sub, Ref, Cidr, Base64.
 
 ## Usage
 
