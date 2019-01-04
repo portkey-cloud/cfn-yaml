@@ -57,7 +57,9 @@
   (->> [[!Ref #(scalar-node "!Ref" (:logicalName %))]
         [!Sub (fn [{:keys [string bindings]}]
                (if (empty? bindings)
-                 (scalar-node (Tag. "!Sub") string)
+                 (scalar-node (Tag. "!Sub") string :style (if (.contains string "\n")
+                                                            DumperOptions$ScalarStyle/LITERAL
+                                                            DumperOptions$ScalarStyle/PLAIN))
                  (SequenceNode. (Tag. "!Sub")
                                 [(scalar-node Tag/STR string)
                                  (MappingNode. Tag/MAP

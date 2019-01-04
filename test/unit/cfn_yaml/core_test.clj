@@ -87,4 +87,11 @@ Resources:
 ")
 
 (deftest generate
-  (is (= (sut/generate-string tpl) tpl-string)))
+  (testing "Example template rendering matches expected string"
+    (is (= tpl-string (sut/generate-string tpl))))
+  (testing "Output literal style for strings with newlines"
+    (is (= "!Sub |-
+  foo
+  bar
+"
+           (sut/generate-string (!Sub "foo\nbar"))))))
