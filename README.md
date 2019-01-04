@@ -15,12 +15,14 @@ Supports only Sub and Ref intrinsics currently, so rather toy for now.
 [Rebel readline] Type :repl/help for online help info
 user=> (require '[cfn-yaml.core :as cfn])
 nil
+user=> (require '[cfn-yaml.tags.api :refer :all]) ;; For convenience, i.e. (!Sub "...")
+nil
 user=> (def tpl (cfn/generate-string
   #_=>  {:Parameters {:NamePrefix {:Type "String"}}
   #_=>   :Resources (into {} (for [stage [:dev :test :prod]
   #_=>                             :let [stage-name (name stage)]]
   #_=>                         [stage-name {:Type "AWS::S3::Bucket"
-  #_=>                                      :Properties {:BucketName (cfn/->Sub (str "${NamePrefix}-" stage-name))}}]))}))
+  #_=>                                      :Properties {:BucketName (!Sub (str "${NamePrefix}-" stage-name))}}]))}))
 #'user/tpl
 user=> (println tpl)
 Parameters:
