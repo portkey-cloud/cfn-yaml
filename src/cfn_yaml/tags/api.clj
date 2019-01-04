@@ -9,3 +9,6 @@
 
 (defn !Cidr [ipBlock count cidrBits]
   (tags/->!Cidr ipBlock count cidrBits))
+
+(defn !Base64 [valueToEncode]
+  (tags/->!Base64 valueToEncode))

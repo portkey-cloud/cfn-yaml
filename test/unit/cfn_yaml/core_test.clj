@@ -95,3 +95,14 @@ Resources:
   bar
 "
            (sut/generate-string (!Sub "foo\nbar"))))))
+
+(deftest base64
+  (is (= {:UserData (!Base64 {"Fn::Sub" "moi\nhei"})}
+         (sut/parse "UserData: !Base64
+     \"Fn::Sub\": |
+       moi
+       hei"))))
+
+(deftest cidr
+  (is (= (!Cidr "192.168.0.0/24" 6 5)
+         (sut/parse "!Cidr [ \"192.168.0.0/24\", 6, 5 ]"))))
