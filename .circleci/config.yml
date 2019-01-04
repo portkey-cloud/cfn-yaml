@@ -1,0 +1,26 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/clojure:tools-deps-1.10.0.408
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "deps.edn" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+
+      - run: clj -Sdeps
+
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: v1-dependencies-{{ checksum "deps.edn" }}
+
+      # run tests!
+      - run: bin/kaocha
