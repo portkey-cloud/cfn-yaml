@@ -6,6 +6,8 @@ Also validates references in the templates.
 
 ## Status
 
+[![CircleCI](https://circleci.com/gh/portkey-cloud/cfn-yaml.svg?style=svg)](https://circleci.com/gh/portkey-cloud/cfn-yaml)
+
 Supports only Sub and Ref intrinsics currently, so rather toy for now.
 
 ## Usage
