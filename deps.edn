@@ -1,6 +1,5 @@
 {:deps {org.clojure/clojure {:mvn/version "1.10.0"}
-        org.yaml/snakeyaml {:mvn/version "1.23"}
-        circleci/clj-yaml {:mvn/version "0.5.6"}}
+        clj-commons/clj-yaml {:mvn/version "0.6.0"}}
  :aliases {:test {:extra-deps {lambdaisland/kaocha {:mvn/version "0.0-333"}}
                   :extra-paths ["test-resources"]}
            :cider {:extra-deps {cider/cider-nrepl {:mvn/version "0.19.0"}}
