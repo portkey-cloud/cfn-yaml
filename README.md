@@ -45,11 +45,11 @@ nil
 user=> (cfn/parse tpl)
 #ordered/map ([:Parameters #ordered/map ([:NamePrefix #ordered/map ([:Type "String"])])]
               [:Resources #ordered/map ([:dev #ordered/map ([:Type "AWS::S3::Bucket"]
-                                                            [:Properties #ordered/map ([:BucketName #cfn_yaml.core.Sub{:value "${NamePrefix}-dev"}])])]
+                                                            [:Properties #ordered/map ([:BucketName #cfn_yaml.tags.!Sub{:string "${NamePrefix}-dev", :bindings{}}])])]
                                         [:test #ordered/map ([:Type "AWS::S3::Bucket"]
-                                                             [:Properties #ordered/map ([:BucketName #cfn_yaml.core.Sub{:value "${NamePrefix}-test"}])])]
+                                                             [:Properties #ordered/map ([:BucketName #cfn_yaml.tags.!Sub{:string "${NamePrefix}-test", :bindings {}}])])]
                                         [:prod #ordered/map ([:Type "AWS::S3::Bucket"]
-                                                             [:Properties #ordered/map ([:BucketName #cfn_yaml.core.Sub{:value "${NamePrefix}-prod"}])])])])
+                                                             [:Properties #ordered/map ([:BucketName #cfn_yaml.tags.!Sub{:string "${NamePrefix}-prod", :bindings {}}])])])])
 user=> (require '[cognitect.aws.client.api :as aws])
 nil
 user=> (def cfn-client (aws/client {:api :cloudformation}))
