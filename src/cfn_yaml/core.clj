@@ -109,9 +109,12 @@
     (validate-references cfn)
     cfn))
 
+(defn generate-string* [cfn-data]
+  (.dump (make-yaml) (yaml/encode cfn-data)))
+
 (defn generate-string [cfn-data]
   (validate-references cfn-data)
-  (.dump (make-yaml) (yaml/encode cfn-data)))
+  (generate-string* cfn-data))
 
 (defn parse-and-print [filename]
   (println (.dump (make-yaml) (yaml/encode (parse (slurp filename))))))

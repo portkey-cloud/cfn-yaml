@@ -133,3 +133,13 @@ Resources:
 (deftest get-att-gen
   (is (= "!GetAtt 'myELB.DNSName'\n"
          (sut/generate-string (!GetAtt "myELB" "DNSName")))))
+
+
+(deftest join-attr
+  (is (= (!Join ":" [(!Ref "AWS::StackName") "ECSTaskExecutionRole"])
+         (sut/parse* "!Join [ ':', [ !Ref 'AWS::StackName', 'ECSTaskExecutionRole']]"))))
+
+;; TODO don't know how to generate vectors
+#_(deftest join-attr-gen
+  (is (= "!Join [ ':', [ !Ref 'AWS::StackName', 'ECSTaskExecutionRole' ] ]"
+         (sut/generate-string* (!Join ":" [(!Ref "AWS::StackName") "ECSTaskExecutionRole"])))))
