@@ -15,3 +15,6 @@
 
 (defn !FindInMap [mapName topLevelKey secondLevelKey]
   (tags/->!FindInMap mapName topLevelKey secondLevelKey))
+
+(defn !GetAtt [logicalNameOfResource attributeName]
+  (tags/->!GetAtt logicalNameOfResource attributeName))
