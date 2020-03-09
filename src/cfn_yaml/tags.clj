@@ -34,6 +34,14 @@
   (encode [data]
     data))
 
+;; https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference-findinmap.html
+(defrecord !FindInMap [mapName topLevelKey secondLevelKey]
+  yaml/YAMLCodec
+  (decode [data keywords]
+    data)
+  (encode [data]
+    data))
+
 (defn constructors [get-constructor]
   (let [construct #(.construct (get-constructor %) %)]
     (->> [[!Ref #(->!Ref (.getValue %))]
@@ -45,6 +53,7 @@
                                   (map #(do [(-> % .getKeyNode .getValue) (construct (.getValueNode %))]))
                                   (-> node .getValue second .getValue)))))]
           [!Cidr (fn [node] (apply ->!Cidr (map construct (.getValue node))))]
+          [!FindInMap (fn [node] (apply ->!FindInMap (map construct (.getValue node))))]
           [!Base64 (fn [node]
                      (condp = (.getNodeId node)
                        NodeId/scalar (->!Base64 (.getValue node))
@@ -87,6 +96,11 @@
                                   (scalar-node Tag/INT (str (:count %)))
                                   (scalar-node Tag/INT (str (:cidrBits %)))]
                                  DumperOptions$FlowStyle/FLOW)]
+          [!FindInMap #(SequenceNode. (Tag. "!FindInMap")
+                                      [(scalar-node Tag/STR (:mapName %) :style DumperOptions$ScalarStyle/DOUBLE_QUOTED)
+                                       (scalar-node Tag/STR (:topLevelKey %) :style DumperOptions$ScalarStyle/DOUBLE_QUOTED)
+                                       (scalar-node Tag/STR (:secondLevelKey %) :style DumperOptions$ScalarStyle/DOUBLE_QUOTED)]
+                                      DumperOptions$FlowStyle/FLOW)]
           [!Base64 (fn [{:keys [valueToEncode]}]
                      (cond
                        (string? valueToEncode) (scalar-node "!Base64" valueToEncode)

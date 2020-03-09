@@ -98,8 +98,11 @@
       (throw (ex-info (str "Unresolved references found: " unresolved-references)
                       {:unresolved unresolved-references})))))
 
+(defn parse* [yml]
+  (yaml/decode (.load (make-yaml) yml) true))
+
 (defn parse [yml]
-  (let [cfn (yaml/decode (.load (make-yaml) yml) true)]
+  (let [cfn (parse* yml)]
     (validate-references cfn)
     cfn))
 

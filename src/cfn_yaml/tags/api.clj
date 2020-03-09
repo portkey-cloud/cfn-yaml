@@ -12,3 +12,6 @@
 
 (defn !Base64 [valueToEncode]
   (tags/->!Base64 valueToEncode))
+
+(defn !FindInMap [mapName topLevelKey secondLevelKey]
+  (tags/->!FindInMap mapName topLevelKey secondLevelKey))
