@@ -113,3 +113,15 @@ Resources:
 (deftest cidr
   (is (= (!Cidr "192.168.0.0/24" 6 5)
          (sut/parse "!Cidr [ \"192.168.0.0/24\", 6, 5 ]"))))
+
+(deftest find-in-map
+  (is (= (!FindInMap "SubnetConfig" (!Ref "AWS::Region") "CIDR")
+         (sut/parse* "!FindInMap ['SubnetConfig', !Ref 'AWS::Region', 'CIDR']")))
+
+  (is (= (!FindInMap "SubnetConfig" "VPC" "CIDR")
+         (sut/parse "!FindInMap ['SubnetConfig', 'VPC', 'CIDR']"))))
+
+(deftest find-in-map-gen
+  (is (= "!FindInMap [\"SubnetConfig\", \"VPC\", \"CIDR\"]\n"
+         (sut/generate-string (!FindInMap "SubnetConfig" "VPC" "CIDR")))))
+
