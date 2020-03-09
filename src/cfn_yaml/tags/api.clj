@@ -18,3 +18,6 @@
 
 (defn !GetAtt [logicalNameOfResource attributeName]
   (tags/->!GetAtt logicalNameOfResource attributeName))
+
+(defn !Join [delimiter list-of-values]
+  (tags/->!Join delimiter list-of-values))

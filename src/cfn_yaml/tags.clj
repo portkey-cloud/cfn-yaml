@@ -50,6 +50,14 @@
   (encode [data]
     data))
 
+;; https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference-join.html
+(defrecord !Join [delimiter list-of-values]
+  yaml/YAMLCodec
+  (decode [data keywords]
+    data)
+  (encode [data]
+    data))
+
 (defn constructors [get-constructor]
   (let [construct #(.construct (get-constructor %) %)]
     (->> [[!Ref #(->!Ref (.getValue %))]
@@ -63,6 +71,8 @@
           [!Cidr (fn [node] (apply ->!Cidr (map construct (.getValue node))))]
           [!FindInMap (fn [node] (apply ->!FindInMap (map construct (.getValue node))))]
           [!GetAtt (fn [node] (apply ->!GetAtt (clojure.string/split (.getValue node) #"\.")))]
+          [!Join (fn [node] (let [[delimiter list-of-values] (map construct (.getValue node))]
+                             (->!Join delimiter list-of-values)))]
           [!Base64 (fn [node]
                      (condp = (.getNodeId node)
                        NodeId/scalar (->!Base64 (.getValue node))
