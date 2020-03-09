@@ -125,3 +125,11 @@ Resources:
   (is (= "!FindInMap [\"SubnetConfig\", \"VPC\", \"CIDR\"]\n"
          (sut/generate-string (!FindInMap "SubnetConfig" "VPC" "CIDR")))))
 
+
+(deftest get-att
+  (is (= (!GetAtt "myELB" "DNSName")
+         (sut/parse* "!GetAtt myELB.DNSName"))))
+
+(deftest get-att-gen
+  (is (= "!GetAtt 'myELB.DNSName'\n"
+         (sut/generate-string (!GetAtt "myELB" "DNSName")))))

@@ -42,6 +42,14 @@
   (encode [data]
     data))
 
+;; https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference-getatt.html
+(defrecord !GetAtt [logicalNameOfResource attributeName]
+  yaml/YAMLCodec
+  (decode [data keywords]
+    data)
+  (encode [data]
+    data))
+
 (defn constructors [get-constructor]
   (let [construct #(.construct (get-constructor %) %)]
     (->> [[!Ref #(->!Ref (.getValue %))]
@@ -54,6 +62,7 @@
                                   (-> node .getValue second .getValue)))))]
           [!Cidr (fn [node] (apply ->!Cidr (map construct (.getValue node))))]
           [!FindInMap (fn [node] (apply ->!FindInMap (map construct (.getValue node))))]
+          [!GetAtt (fn [node] (apply ->!GetAtt (clojure.string/split (.getValue node) #"\.")))]
           [!Base64 (fn [node]
                      (condp = (.getNodeId node)
                        NodeId/scalar (->!Base64 (.getValue node))
@@ -101,6 +110,7 @@
                                        (scalar-node Tag/STR (:topLevelKey %) :style DumperOptions$ScalarStyle/DOUBLE_QUOTED)
                                        (scalar-node Tag/STR (:secondLevelKey %) :style DumperOptions$ScalarStyle/DOUBLE_QUOTED)]
                                       DumperOptions$FlowStyle/FLOW)]
+          [!GetAtt #(scalar-node "!GetAtt" (str (:logicalNameOfResource %) "." (:attributeName %)))]
           [!Base64 (fn [{:keys [valueToEncode]}]
                      (cond
                        (string? valueToEncode) (scalar-node "!Base64" valueToEncode)
