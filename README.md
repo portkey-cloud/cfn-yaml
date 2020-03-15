@@ -83,7 +83,7 @@ test 2b5a9713-292c-488a-b4e0-32196a34471b-test
 
 ## License
 
-Copyright © 2018 Kimmo Koskinen
+Copyright © 2018-2020 Kimmo Koskinen
 
 Distributed under the Eclipse Public License either version 1.0 or (at
 your option) any later version.
