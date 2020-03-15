@@ -8,7 +8,7 @@ Also validates references in the templates.
 
 [![CircleCI](https://circleci.com/gh/portkey-cloud/cfn-yaml.svg?style=svg)](https://circleci.com/gh/portkey-cloud/cfn-yaml)
 
-Initial goal was to be able to parse Cloudformation Yaml templates that contain short for tags, for example `!Sub 'Hello ${AWS::StackName}'`, into Clojure data. These [tags](https://yaml.org/spec/1.1/#local%20tag/) need support from the parser, for which [snakeyaml](https://bitbucket.org/asomov/snakeyaml/wiki/Documentation#markdown-header-constructors-representers-resolvers) provides support via constructors and representers. This library implements constructors and representers for some short form tags: Sub, Ref, Cidr, Base64.
+Initial goal was to be able to parse Cloudformation Yaml templates that contain short for tags, for example `!Sub 'Hello ${AWS::StackName}'`, into Clojure data. These [tags](https://yaml.org/spec/1.1/#local%20tag/) need support from the parser, for which [snakeyaml](https://bitbucket.org/asomov/snakeyaml/wiki/Documentation#markdown-header-constructors-representers-resolvers) provides support via constructors and representers. This library implements constructors and representers for some short form tags: Sub, Ref, Cidr, Base64, GetAtt, Join, FindInMap.
 
 ## Usage
 
