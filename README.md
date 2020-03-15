@@ -16,7 +16,7 @@ First, add the dependency to `deps.edn`:
 
 ```clojure
 {:deps {portkey-cloud/cfn-yaml {:git/url "https://github.com/portkey-cloud/cfn-yaml"
-                                :sha "23e9442ec643007edf45e78af24d3d6c35db4a5e"}}}
+                                :sha "79b3c975a25c14f12c41398863f1cb4a3521c4e7"}}}
 ```
 
 Then hack in the repl :). The example below uses [aws-api](https://github.com/cognitect-labs/aws-api) for pushing the generated YAML to Cloudformation API, so the repl is started with a `AWS_PROFILE` containing credentials for making API calls to AWS.
