@@ -139,7 +139,6 @@ Resources:
   (is (= (!Join ":" [(!Ref "AWS::StackName") "ECSTaskExecutionRole"])
          (sut/parse* "!Join [ ':', [ !Ref 'AWS::StackName', 'ECSTaskExecutionRole']]"))))
 
-;; TODO don't know how to generate vectors
-#_(deftest join-attr-gen
-  (is (= "!Join [ ':', [ !Ref 'AWS::StackName', 'ECSTaskExecutionRole' ] ]"
+(deftest join-attr-gen
+  (is (= "!Join [':', [!Ref 'AWS::StackName', \"ECSTaskExecutionRole\"]]\n"
          (sut/generate-string* (!Join ":" [(!Ref "AWS::StackName") "ECSTaskExecutionRole"])))))

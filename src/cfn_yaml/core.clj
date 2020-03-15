@@ -62,7 +62,8 @@
     (.putAll (.get representers-field representer)
              (tags/representers #(.invoke represent-data
                                           representer
-                                          (into-array Object [%]))))
+                                          (into-array Object [%]))
+                                representer))
     yaml))
 
 (defn find-references [template]

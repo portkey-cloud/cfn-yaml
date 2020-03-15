@@ -95,7 +95,7 @@
                nil
                style))
 
-(defn representers [represent-data]
+(defn representers [represent-data representer]
   (let [represent-map (fn [m & {:keys [tag] :or {tag Tag/MAP}}]
                         (MappingNode. tag
                                       (for [[k v] m]
@@ -114,6 +114,16 @@
                                  [(scalar-node Tag/STR (:ipBlock %) :style DumperOptions$ScalarStyle/DOUBLE_QUOTED)
                                   (scalar-node Tag/INT (str (:count %)))
                                   (scalar-node Tag/INT (str (:cidrBits %)))]
+                                 DumperOptions$FlowStyle/FLOW)]
+          [!Join #(SequenceNode. (Tag. "!Join")
+                                 [(.represent representer (:delimiter %))
+                                  (SequenceNode. Tag/SEQ
+                                                 (map (fn [x]
+                                                        (if (string? x)
+                                                          (scalar-node Tag/STR x :style DumperOptions$ScalarStyle/DOUBLE_QUOTED)
+                                                          (.represent representer x)))
+                                                      (:list-of-values %))
+                                                 DumperOptions$FlowStyle/FLOW)]
                                  DumperOptions$FlowStyle/FLOW)]
           [!FindInMap #(SequenceNode. (Tag. "!FindInMap")
                                       [(scalar-node Tag/STR (:mapName %) :style DumperOptions$ScalarStyle/DOUBLE_QUOTED)
