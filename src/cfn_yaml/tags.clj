@@ -105,8 +105,8 @@
           [!Sub (fn [{:keys [string bindings]}]
                   (if (empty? bindings)
                     (scalar-node "!Sub" string :style (if (.contains string "\n")
-                                                               DumperOptions$ScalarStyle/LITERAL
-                                                               DumperOptions$ScalarStyle/PLAIN))
+                                                        DumperOptions$ScalarStyle/LITERAL
+                                                        DumperOptions$ScalarStyle/PLAIN))
                     (SequenceNode. (Tag. "!Sub")
                                    [(scalar-node Tag/STR string) (represent-map bindings)]
                                    DumperOptions$FlowStyle/BLOCK)))]
