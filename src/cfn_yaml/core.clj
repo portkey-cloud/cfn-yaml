@@ -88,7 +88,10 @@
         references (set (->> (find-references cfn)
                              (keep (fn [x]
                                      (condp = (type x)
-                                       cfn_yaml.tags.!Ref [(:logicalName x)]
+                                       cfn_yaml.tags.!Ref (let [{:keys [logicalName]} x]
+                                                            (if-not (.startsWith logicalName "AWS::")
+                                                              [logicalName]
+                                                              []))
                                        cfn_yaml.tags.!Sub (->> (re-seq #"\$\{([^\}]+)" (:string x))
                                                                (map second)
                                                                (filter #(not (.contains % "::")))))))

@@ -50,15 +50,22 @@
            (sut/generate-string parsed-template)))))
 
 (deftest validate-references
-  (try
-    (sut/parse "
+  (testing "Validate references within the template"
+    (try
+      (sut/parse "
 Name: !Sub
   - www.${Domain}
   - { Domain: !Ref RootDomainName }
 ")
-    (is false "Undefined reference should have been found")
-    (catch clojure.lang.ExceptionInfo e
-      (is (= #{"RootDomainName"} (:unresolved (ex-data e)))))))
+      (is false "Undefined reference should have been found")
+      (catch clojure.lang.ExceptionInfo e
+        (is (= #{"RootDomainName"} (:unresolved (ex-data e)))))))
+  (testing "Exclude pseudo parameters"
+    (is (= {:Outputs {:MyStacksRegion
+                      {:Value (!Ref "AWS::Region")}}}
+           (sut/parse "Outputs:
+  MyStacksRegion:
+    Value: !Ref \"AWS::Region\"")))))
 
 (def tpl
   {:Parameters {:NamePrefix {:Type "String"}}
