@@ -1,7 +1,7 @@
 (ns unit.cfn-yaml.core-test
   (:require [clojure.test :refer [deftest is testing]]
             [cfn-yaml.core :as sut]
-            [cfn-yaml.tags.api :refer [!Sub !Ref !Base64 !Cidr]]
+            [cfn-yaml.tags.api :refer [!Sub !Ref !Base64 !Cidr !FindInMap !GetAtt !Join]]
             [clojure.java.io :as io]))
 
 (def template
