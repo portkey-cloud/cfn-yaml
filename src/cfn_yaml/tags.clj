@@ -132,9 +132,9 @@
                                       DumperOptions$FlowStyle/FLOW)]
           [!GetAtt #(scalar-node "!GetAtt" (str (:logicalNameOfResource %) "." (:attributeName %)))]
           [!Base64 (fn [{:keys [valueToEncode]}]
-                     (cond
-                       (string? valueToEncode) (scalar-node "!Base64" valueToEncode)
-                       (map? valueToEncode) (represent-map valueToEncode :tag (Tag. "!Base64"))))]]
+                     (if (string? valueToEncode)
+                       (scalar-node "!Base64" valueToEncode)
+                       (.represent representer valueToEncode)))]]
          (into {} (map (fn [[klass f]]
                          [klass (reify org.yaml.snakeyaml.representer.Represent
                                   (representData [this data]
