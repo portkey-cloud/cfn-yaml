@@ -1,0 +1,3 @@
+{:group-id "portkey-cloud"
+ :artifact-id "cfn-yaml"
+ :scm-url "https://github.com/portkey-cloud/cfn-yaml"}

@@ -4,4 +4,6 @@
                   :extra-paths ["test-resources"]}
            :aws {:extra-deps {com.cognitect.aws/api {:mvn/version "0.8.171"}
                               com.cognitect.aws/endpoints {:mvn/version "1.1.11.475"}
-                              com.cognitect.aws/cloudformation {:mvn/version "684.2.377.0"}}}}}
+                              com.cognitect.aws/cloudformation {:mvn/version "684.2.377.0"}}}
+           :release {:extra-deps {appliedscience/deps-library {:mvn/version "0.3.4"}}
+                     :main-opts ["-m" "deps-library.release"]}}}
