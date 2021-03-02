@@ -70,7 +70,12 @@
                                   (-> node .getValue second .getValue)))))]
           [!Cidr (fn [node] (apply ->!Cidr (map construct (.getValue node))))]
           [!FindInMap (fn [node] (apply ->!FindInMap (map construct (.getValue node))))]
-          [!GetAtt (fn [node] (apply ->!GetAtt (clojure.string/split (.getValue node) #"\.")))]
+          [!GetAtt (fn [node]
+                     (let [value (.getValue node)]
+                       (apply ->!GetAtt (if (string? value)
+                                          (clojure.string/split value #"\.")
+                                          (for [v value]
+                                            (.getValue v))))))]
           [!Join (fn [node] (let [[delimiter list-of-values] (map construct (.getValue node))]
                              (->!Join delimiter list-of-values)))]
           [!Base64 (fn [node]
